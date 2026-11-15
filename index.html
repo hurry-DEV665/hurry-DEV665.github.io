@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hurrivow|赴约社 —— 打造属于我们自己的科技生态</title>
+<meta name="description" content="Hurrivow|赴约社：学生自研科技小组，五件自研软件全开源。桌宠、安全管家、进程监视器、浏览器、编译助手——打造属于我们自己的科技生态。">
+<style>
+  :root {
+    --blue:#0B9EE0; --lime:#97CE20; --ink:#141414;
+    --bg:#141416; --panel:#1e1f22; --panel2:#25272b;
+    --border:#3a3d42; --text:#e8eaed; --muted:#9aa3ad;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI','Microsoft YaHei',sans-serif; line-height:1.7; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* 导航 */
+  nav { position:sticky; top:0; z-index:10; background:rgba(20,20,22,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); }
+  nav .wrap { display:flex; align-items:center; gap:18px; height:64px; }
+  .logo-mini { height:40px; }
+  nav .brand { font-weight:800; font-size:17px; letter-spacing:1px; }
+  nav .brand .b { color:var(--blue); } nav .brand .g { color:var(--lime); }
+  nav a { color:var(--muted); text-decoration:none; font-size:14px; }
+  nav a:hover { color:var(--text); }
+  nav .bili { margin-left:auto; background:var(--blue); color:#fff; padding:8px 16px; border-radius:20px; font-weight:bold; }
+  nav .bili:hover { background:#0aa0f0; }
+
+  /* 首屏 */
+  .hero { text-align:center; padding:72px 24px 56px; }
+  .hero .logo { width:200px; max-width:60%; margin-bottom:20px; }
+  .hero h1 { font-size:30px; font-weight:800; letter-spacing:1px; }
+  .hero h1 .b { color:var(--blue); } .hero h1 .g { color:var(--lime); }
+  .hero p.slogan { color:var(--muted); font-size:16px; margin:14px 0 30px; }
+  .btn { display:inline-block; padding:11px 26px; border-radius:24px; text-decoration:none; font-weight:bold; font-size:15px; margin:0 8px; }
+  .btn.primary { background:var(--blue); color:#fff; }
+  .btn.primary:hover { background:#0aa0f0; }
+  .btn.ghost { border:2px solid var(--border); color:var(--text); }
+  .btn.ghost:hover { border-color:var(--blue); color:var(--blue); }
+  .hero .stats { margin-top:34px; display:flex; justify-content:center; gap:36px; color:var(--muted); font-size:13px; flex-wrap:wrap; }
+  .hero .stats b { display:block; font-size:22px; color:var(--text); }
+
+  /* 区块 */
+  section { padding:56px 0; border-top:1px solid var(--border); }
+  section h2 { font-size:22px; margin-bottom:8px; }
+  section .sub { color:var(--muted); font-size:14px; margin-bottom:28px; }
+
+  /* 产品卡片 */
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:10px; transition:border-color .2s, transform .2s; }
+  .card:hover { border-color:var(--blue); transform:translateY(-3px); }
+  .card .no { font-size:11px; color:var(--muted); letter-spacing:2px; }
+  .card h3 { font-size:17px; }
+  .card h3 .tag { font-size:11px; background:var(--panel2); color:var(--muted); border-radius:10px; padding:2px 10px; margin-left:8px; vertical-align:2px; }
+  .card p { color:var(--muted); font-size:13.5px; flex:1; }
+  .card .dl { background:var(--panel2); color:var(--blue); text-align:center; border-radius:8px; padding:9px; text-decoration:none; font-size:13.5px; font-weight:bold; }
+  .card .dl:hover { background:var(--blue); color:#fff; }
+  .card .dl.soon { color:var(--muted); font-weight:normal; }
+
+  /* 团队 */
+  .team { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; }
+  .member { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:22px; }
+  .member .role { font-size:11px; letter-spacing:2px; color:var(--lime); }
+  .member h3 { margin:6px 0 4px; }
+  .member p { color:var(--muted); font-size:13.5px; }
+
+  /* 品牌墙 */
+  .brand-wall { display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:center; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:30px; }
+  .brand-wall .sw { text-align:center; font-size:11px; color:var(--muted); }
+  .brand-wall .sw svg { width:110px; height:110px; display:block; margin:0 auto 6px; }
+  .colors { display:flex; gap:14px; margin-top:22px; flex-wrap:wrap; }
+  .colors .c { display:flex; align-items:center; gap:8px; background:var(--panel); border:1px solid var(--border); border-radius:20px; padding:6px 14px; font-size:12px; color:var(--muted); }
+  .colors .chip { width:16px; height:16px; border-radius:5px; }
+
+  /* 页脚 */
+  footer { border-top:1px solid var(--border); padding:34px 0 44px; text-align:center; color:var(--muted); font-size:13px; }
+  footer .logo-mini { height:36px; margin-bottom:10px; }
+  footer a { color:var(--blue); text-decoration:none; }
+
+  @media (max-width:640px){
+    nav .wrap { gap:10px; } nav a.hide-m { display:none; }
+    .hero h1 { font-size:23px; }
+    .grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <svg class="logo-mini" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="100" fill="#0B9EE0"/><g transform="translate(256,256) skewX(-12)" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" fill="none"><line x1="-92" y1="-150" x2="-92" y2="150"/><line x1="92" y1="-150" x2="92" y2="150"/><line x1="-92" y1="0" x2="92" y2="0"/></g><rect x="368" y="368" width="96" height="96" rx="22" fill="#97CE20"/></svg>
+  <span class="brand"><span class="b">Hurrivow</span>|<span class="g">赴约社</span></span>
+  <a href="#products">产品</a>
+  <a href="#team" class="hide-m">团队</a>
+  <a href="#brand" class="hide-m">品牌</a>
+  <a class="bili" href="https://space.bilibili.com/3493297012083147" target="_blank" rel="noopener">B 站频道</a>
+</div></nav>
+
+<header class="hero">
+  <svg class="logo" viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg"><circle cx="248" cy="238" r="180" fill="#0B9EE0"/><g transform="translate(248,238) skewX(-12)" stroke="#141414" stroke-width="20" stroke-linecap="round" fill="none"><line x1="-58" y1="-98" x2="-58" y2="98"/><line x1="58" y1="-98" x2="58" y2="98"/><line x1="-58" y1="0" x2="58" y2="0"/></g><rect x="304" y="330" width="200" height="120" rx="26" fill="#97CE20"/><text x="404" y="391" text-anchor="middle" dominant-baseline="central" font-family="'Segoe UI','Microsoft YaHei',Arial,sans-serif" font-weight="800" font-size="44" letter-spacing="2" fill="#0B9EE0">&lt;/&gt;DEV</text></svg>
+  <h1><span class="b">Hurrivow</span>|<span class="g">赴约社</span></h1>
+  <p class="slogan">学生自研科技小组 —— 打造属于我们自己的科技生态</p>
+  <a class="btn primary" href="#products">查看产品</a>
+  <a class="btn ghost" href="https://space.bilibili.com/3493297012083147" target="_blank" rel="noopener">B 站看演示</a>
+  <div class="stats">
+    <div><b>5</b>自研软件</div>
+    <div><b>2</b>种技术栈（Python / C++）</div>
+    <div><b>5</b>人团队（3 真人 + 2 AI）</div>
+    <div><b id="busuanzi_value_site_uv">-</b>官网访客</div>
+    <div><b>∞</b>个约定</div>
+  </div>
+</header>
+
+<section id="products"><div class="wrap">
+  <h2>📦 产品矩阵</h2>
+  <p class="sub">五件自研软件，全部开放下载 · 点击卡片按钮获取（蓝奏云提取码见各视频简介）</p>
+  <div class="grid">
+
+    <div class="card">
+      <span class="no">PRODUCT 01</span>
+      <h3>MC 恶魂桌宠 <span class="tag">Python</span></h3>
+      <p>Minecraft 风格的恶魂桌宠，跟随鼠标到处跑，速度可调。我们发布的第一件作品，也是第一位用户主动索取的软件。</p>
+      <a class="dl" href="https://wwbnp.lanzouc.com/iUcXr4fytx1c" target="_blank" rel="noopener">下载 Desktop Pet.zip（提取码 7vo0）</a>
+    </div>
+
+    <div class="card">
+      <span class="no">PRODUCT 02</span>
+      <h3>Hurrivow 安全管家 <span class="tag">C++ / Win32</span></h3>
+      <p>原生 Win32 系统管家：CPU / 内存实时监控、磁盘信息、系统体检打分、一键清内存、清理临时垃圾、进程管理、浅色/深色主题。</p>
+      <a class="dl" href="https://wwbnp.lanzouc.com/ipkZW4fyz4ng" target="_blank" rel="noopener">下载 HurrivowSafeCenter.zip（提取码 4bu4）</a>
+    </div>
+
+    <div class="card">
+      <span class="no">PRODUCT 03</span>
+      <h3>HurriTask 进程监视器 <span class="tag">C++ / 控制台</span></h3>
+      <p>命令行进程监视器：list 列进程 / kill 结束 / search 搜索 / refresh 刷新，彩色 PID 高亮。单文件 332KB，轻到没有朋友。</p>
+      <a class="dl" href="https://wwbnp.lanzouc.com/iKPWf4fyydde" target="_blank" rel="noopener">下载 HurriTask.zip（提取码 4u5c）</a>
+    </div>
+
+    <div class="card">
+      <span class="no">PRODUCT 04</span>
+      <h3>HurriBrowser <span class="tag">Python / PyQt6</span></h3>
+      <p>极简深色浏览器：四键导航、地址栏直达+文字搜索、登录态持久保存、夜间渲染一键开关。v0.2 计划迁移 WebView2 内核，补齐视频播放。</p>
+      <a class="dl" href="https://wwbnp.lanzouc.com/i1th84g1ku8f" target="_blank" rel="noopener">下载 HurriBrowser.zip（提取码 4ixg）</a>
+    </div>
+
+    <div class="card">
+      <span class="no">PRODUCT 05</span>
+      <h3>HurriBuild 编译助手 <span class="tag">Python · CLI + GUI</span></h3>
+      <p>让谁都能一键编译 C++：自动定位 VS 环境、错误行号标红、双击日志跳转源码、编译参数预设保存。命令行与 GUI 双形态。</p>
+      <a class="dl" href="https://wwbnp.lanzouc.com/iDTBu4g2ziwd" target="_blank" rel="noopener">下载 HurriBuild-v0.2（预览测试版）（提取码 h6hj）</a>
+    </div>
+
+    <div class="card">
+      <span class="no">PRODUCT 06</span>
+      <h3>Hurrivow 官网 <span class="tag">HTML / CSS</span></h3>
+      <p>你正在看的这个页面，就是 6 号机。品牌色全手写，无框架无模板，和我们的软件一样从零开始。</p>
+      <a class="dl" href="#">你已经在浏览它了 😉</a>
+    </div>
+
+  </div>
+</div></section>
+
+<section id="team"><div class="wrap">
+  <h2>👥 团队编制</h2>
+  <p class="sub">真人组员 ×3 · AI 组员 ×2 —— 各司其职，赴每一个约定</p>
+  <div class="team">
+    <div class="member">
+      <span class="role">FOUNDER · 总指挥</span>
+      <h3>岳佳霖</h3>
+      <p>创始人兼队长。产品决策、主力开发、B 站出镜。Python 与 C++ 双栈，从桌宠写到浏览器。</p>
+    </div>
+    <div class="member">
+      <span class="role">MEMBER · 组员</span>
+      <h3>任灏</h3>
+      <p>Hurrivow|赴约社 组员，产品测试与反馈担当。</p>
+    </div>
+    <div class="member">
+      <span class="role">MEMBER · 组员</span>
+      <h3>陆衍一</h3>
+      <p>Hurrivow|赴约社 组员，产品测试与反馈担当。</p>
+    </div>
+    <div class="member">
+      <span class="role">AI · 首席工程师</span>
+      <h3>超级无敌蒜香龙虾 🦞</h3>
+      <p>编码实现、代码评审、测试打包、品牌设计、产品年表维护。周六周日不休息的那种组员。</p>
+    </div>
+    <div class="member">
+      <span class="role">AI · 创意合伙人</span>
+      <h3>豆包 🐬</h3>
+      <p>创意提案、GUI 设计稿、文案润色。HurriBuild 的界面就是它的设计稿落地而成。</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="brand"><div class="wrap">
+  <h2>🎨 品牌视觉</h2>
+  <p class="sub">LOGO 手绘初稿 → 双 AI 精修五版 · 前倾的 H，代表"奔赴每一个约定"</p>
+  <div class="brand-wall">
+    <div class="sw"><svg viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg"><circle cx="248" cy="238" r="180" fill="#0B9EE0"/><g transform="translate(248,238) skewX(-12)" stroke="#141414" stroke-width="20" stroke-linecap="round" fill="none"><line x1="-58" y1="-98" x2="-58" y2="98"/><line x1="58" y1="-98" x2="58" y2="98"/><line x1="-58" y1="0" x2="58" y2="0"/></g><rect x="304" y="330" width="200" height="120" rx="26" fill="#97CE20"/><text x="404" y="391" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="44" fill="#0B9EE0">&lt;/&gt;DEV</text></svg>主版</div>
+    <div class="sw"><svg viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg"><circle cx="248" cy="238" r="180" fill="#0B9EE0"/><g transform="translate(248,238) skewX(-12)" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" fill="none"><line x1="-58" y1="-98" x2="-58" y2="98"/><line x1="58" y1="-98" x2="58" y2="98"/><line x1="-58" y1="0" x2="58" y2="0"/></g><rect x="304" y="330" width="200" height="120" rx="26" fill="#97CE20"/><text x="404" y="391" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="44" fill="#FFFFFF">&lt;/&gt;DEV</text></svg>暗色版</div>
+    <div class="sw"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="100" fill="#0B9EE0"/><g transform="translate(256,256) skewX(-12)" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" fill="none"><line x1="-92" y1="-150" x2="-92" y2="150"/><line x1="92" y1="-150" x2="92" y2="150"/><line x1="-92" y1="0" x2="92" y2="0"/></g><rect x="368" y="368" width="96" height="96" rx="22" fill="#97CE20"/></svg>图标版</div>
+    <div class="sw"><svg viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg"><circle cx="248" cy="238" r="180" fill="#141414"/><g transform="translate(248,238) skewX(-12)" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" fill="none"><line x1="-58" y1="-98" x2="-58" y2="98"/><line x1="58" y1="-98" x2="58" y2="98"/><line x1="-58" y1="0" x2="58" y2="0"/></g><rect x="304" y="330" width="200" height="120" rx="26" fill="#141414"/><text x="404" y="391" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="44" fill="#FFFFFF">&lt;/&gt;DEV</text></svg>单色版</div>
+  </div>
+  <div class="colors">
+    <span class="c"><span class="chip" style="background:#0B9EE0"></span>Hurrivow 蓝 #0B9EE0</span>
+    <span class="c"><span class="chip" style="background:#97CE20"></span>赴约石灰绿 #97CE20</span>
+    <span class="c"><span class="chip" style="background:#141414"></span>墨黑 #141414</span>
+    <span class="c"><span class="chip" style="background:#1e1f22"></span>深色底 #1e1f22</span>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <svg class="logo-mini" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="100" fill="#0B9EE0"/><g transform="translate(256,256) skewX(-12)" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" fill="none"><line x1="-92" y1="-150" x2="-92" y2="150"/><line x1="92" y1="-150" x2="92" y2="150"/><line x1="-92" y1="0" x2="92" y2="0"/></g><rect x="368" y="368" width="96" height="96" rx="22" fill="#97CE20"/></svg>
+  <p>© 2026 Hurrivow|赴约社 · 创始人 岳佳霖 · 与 AI 组员共同打造</p>
+  <p><a href="https://space.bilibili.com/3493297012083147" target="_blank" rel="noopener">B 站官方频道</a> ｜ 赴约 = 奔赴每一个约定</p>
+</div></footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

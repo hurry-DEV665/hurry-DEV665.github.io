@@ -221,6 +221,41 @@
   <p><a href="https://space.bilibili.com/3493297012083147" target="_blank" rel="noopener">B 站官方频道</a> ｜ 赴约 = 奔赴每一个约定</p>
 </div></footer>
 
-<script async src="https://events.vercount.one/js"></script>
+<script>
+/* 龙虾自研计数客户端：双端点自动切换（主域抽风时自动切备用域） */
+(function(){
+  var endpoints = ["https://events.vercount.one/api/v2/log", "https://cn.vercount.one/api/v2/log"];
+  var key = "vercount_uv_" + location.host.replace(/[^a-zA-Z0-9_-]/g, "_");
+  var isNewUv = document.cookie.indexOf(key + "=1") === -1;
+  document.cookie = key + "=1; path=/; max-age=31536000; samesite=lax";
+  function fill(d){
+    ["site_pv","page_pv","site_uv"].forEach(function(k){
+      var el = document.getElementById("busuanzi_value_" + k);
+      if (el) el.textContent = String((d && d[k]) || "0");
+    });
+  }
+  function tryPost(i){
+    if (i >= endpoints.length) return;
+    var ctl = new AbortController();
+    var to = setTimeout(function(){ ctl.abort(); }, 8000);
+    fetch(endpoints[i], {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ url: location.href, isNewUv: isNewUv }),
+      signal: ctl.signal
+    }).then(function(r){
+      clearTimeout(to);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function(j){
+      fill(j.data || j);
+    }).catch(function(){
+      clearTimeout(to);
+      tryPost(i + 1);
+    });
+  }
+  tryPost(0);
+})();
+</script>
 </body>
 </html>
